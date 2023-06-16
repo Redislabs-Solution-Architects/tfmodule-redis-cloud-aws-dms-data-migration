@@ -1,6 +1,6 @@
-#### Create EC2 Nodes for RE and Test
+#### Create EC2 Node for MySQL DB
 
-# create test node for any potential testing
+# create EC2 Node for MySQL DB
 resource "aws_instance" "test_node" {
   count                       = var.test-node-count
   ami                         = data.aws_ami.ec2-ami.id
@@ -22,7 +22,7 @@ resource "aws_instance" "test_node" {
     Owner = var.owner
   }
 
-
+  # run cmds to create and load data to mysql db in docker
   user_data = <<-EOF
     #!/bin/bash
 
@@ -108,9 +108,9 @@ resource "aws_instance" "test_node" {
     '
 
     echo "import dbs"
-    sleep 10  # Add a delay of 10 seconds
-    docker exec aws-dms-demo-mysql bash -c "cd /tmp && mysql -uroot -pRedis00$ --local-infile -Dtpcds -e 'load data local infile \"store_sales.dat\" replace into table store_sales character set latin1 fields terminated by \"|\"'"
-    echo "imported store_sales"
+    #sleep 10  # Add a delay of 10 seconds
+    #docker exec aws-dms-demo-mysql bash -c "cd /tmp && mysql -uroot -pRedis00$ --local-infile -Dtpcds -e 'load data local infile \"store_sales.dat\" replace into table store_sales character set latin1 fields terminated by \"|\"'"
+    #echo "imported store_sales"
     sleep 10  # Add a delay of 10 seconds
     docker exec aws-dms-demo-mysql bash -c "cd /tmp && mysql -uroot -pRedis00$ --local-infile -Dtpcds -e 'load data local infile \"web_sales.dat\" replace into table web_sales character set latin1 fields terminated by \"|\"'"
     echo "imported web_sales"
