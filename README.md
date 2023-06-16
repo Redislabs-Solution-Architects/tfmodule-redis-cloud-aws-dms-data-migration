@@ -1,6 +1,16 @@
 # Redis_Cloud_to_AWS_DMS_Data_Migration
 Data Migration to Redis Enterprise Cloud on AWS using AWS DMS
 
+Create a VPC
+Create a EC2 node and install docker. Create a MySQL Db and load data into a few tables from an zip file in S3.
+The DB may take about 20 minutes to load all the data.
+After this configure AWS DMS.
+
+
+###
+You can check in the EC2 user_data how things are running by accessing the ec2 then running the following:
+* cd /var/log
+* cat cloud-init-output.log
 
 
 ### Instructions for Use:
