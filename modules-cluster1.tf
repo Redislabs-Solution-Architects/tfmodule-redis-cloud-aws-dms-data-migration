@@ -119,9 +119,6 @@ module "nodes1" {
     ssh_key_path       = var.ssh_key_path1
     test_instance_type = var.test_instance_type
     test-node-count    = var.test-node-count
-    #re_download_url    = var.re_download_url
-    #data-node-count    = var.data-node-count
-    #re_instance_type   = var.re_instance_type
     ebs-volume-size    = var.ebs-volume-size
     allow-public-ssh   = var.allow-public-ssh
     open-nets          = var.open-nets
@@ -132,33 +129,35 @@ module "nodes1" {
     vpc_id             = module.vpc1.vpc-id
 }
 
-# #### Node Outputs to use in future modules
-# output "re-data-node-eips1" {
-#   value = module.nodes1.re-data-node-eips
-# }
+#### Node Outputs to use in future modules
+output "test-node-eips" {
+  value = module.nodes1.test-node-eips
+}
 
-# output "re-data-node-internal-ips1" {
-#   value = module.nodes1.re-data-node-internal-ips
-# }
+output "test-node-internal-ips" {
+  value = module.nodes1.test-node-internal-ips
+}
 
 # output "re-data-node-eip-public-dns1" {
 #   value = module.nodes1.re-data-node-eip-public-dns
 # }
 
-# ########### DNS Module
-# #### Create DNS (NS record, A records for each RE node and its eip)
-# #### Currently using existing dns hosted zone
-# module "dns1" {
-#     source             = "./modules/dns"
-#     providers = {
-#       aws = aws.a
-#     }
-#     dns_hosted_zone_id = var.dns_hosted_zone_id
-#     data-node-count    = var.data-node-count
-#     ### vars pulled from previous modules
-#     vpc_name           = module.vpc1.vpc-name
-#     re-data-node-eips  = module.nodes1.re-data-node-eips
-# }
+########### AWS DMS Module
+#### AWS DMS Endpoint Configuration for your source system - MySQL
+module "dms-replication-instance" {
+    source             = "./modules/dms-replication-instance"
+    providers = {
+      aws = aws.a
+    }
+    ### vars pulled from previous modules
+    vpc_subnets_ids         = module.vpc1.subnet-ids
+    mysql_node_internal-ip  = module.nodes1.test-node-internal-ips
+
+    depends_on = [
+      module.vpc1, 
+      module.nodes1
+    ]
+}
 
 # #### dns FQDN output used in future modules
 # output "dns-ns-record-name1" {
