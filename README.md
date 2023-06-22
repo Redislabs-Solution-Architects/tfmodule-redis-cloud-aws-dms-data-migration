@@ -41,7 +41,7 @@ After this configure AWS DMS.
     cd /var/log
     cat cloud-init-output.log
     ```
-
+*****************
 
 ### Instructions for Use:
 1. Open repo in VS code

@@ -3,8 +3,6 @@
 
 ########## VPC Module
 ### create a brand new VPC, use its outputs in future modules
-### If you already have an existing VPC, comment out and
-### enter your VPC params in the future modules
 module "aws-vpc" {
     source             = "./modules/aws-vpc"
     aws_creds          = var.aws_creds
@@ -39,9 +37,7 @@ output "route-table-id" {
 
 
 ########### Node Module
-#### Create RE and Test nodes
-#### Ansible playbooks configure and install RE software on nodes
-#### Ansible playbooks configure Test node with Redis and Memtier
+#### Create MySQL node and install docker and provision a mysql Db in docker.
 module "nodes" {
     source             = "./modules/nodes"
     owner              = var.owner
@@ -50,8 +46,8 @@ module "nodes" {
     subnet_azs         = var.subnet_azs
     ssh_key_name       = var.ssh_key_name
     ssh_key_path       = var.ssh_key_path
-    test_instance_type = var.test_instance_type
-    test-node-count    = var.test-node-count
+    mysql_instance_type = var.mysql_instance_type
+    mysql-node-count    = var.mysql-node-count
     ebs-volume-size    = var.ebs-volume-size
     allow-public-ssh   = var.allow-public-ssh
     open-nets          = var.open-nets
@@ -63,21 +59,24 @@ module "nodes" {
 }
 
 #### Node Outputs to use in future modules
-output "test-node-eips" {
-  value = module.nodes.test-node-eips
+output "mysql-node-eips" {
+  value = module.nodes.mysql-node-eips
 }
 
-output "test-node-internal-ips" {
-  value = module.nodes.test-node-internal-ips
+output "mysql-node-internal-ips" {
+  value = module.nodes.mysql-node-internal-ips
 }
 
 ########### AWS DMS Module
 #### AWS DMS Endpoint Configuration for your source system - MySQL
 module "dms-replication-instance" {
-    source             = "./modules/dms-replication-instance"
+    source                  = "./modules/dms-replication-instance"
+    owner                   = var.owner
+    prefix_name             = var.prefix_name
+    subnet_azs              = var.subnet_azs
     ### vars pulled from previous modules
     vpc_subnets_ids         = module.aws-vpc.subnet-ids
-    mysql_node_internal-ip  = module.nodes.test-node-internal-ips
+    mysql_node_internal-ip  = module.nodes.mysql-node-internal-ips
 
     depends_on = [
       module.aws-vpc, 
@@ -210,6 +209,8 @@ output "redis_db_pw" {
 #### AWS DMS Endpoint Configuration for your source system - MySQL
 module "dms-target-endpoint" {
     source             = "./modules/dms-target-endpoint"
+    owner              = var.owner
+    prefix_name        = var.prefix_name
     ### vars pulled from previous modules
     redis_db_endpoint  = module.rc-create-db.redis_db_private_endpoint
     redis_db_password  = module.rc-create-db.redis_db_pw
@@ -228,7 +229,9 @@ output "dms_redis_endpoint_target_arn" {
 ########### AWS DMS Target Endpoint Module
 #### AWS DMS Endpoint Configuration for your source system - MySQL
 module "dms-migration-task" {
-    source             = "./modules/dms-migration-task"
+    source                   = "./modules/dms-migration-task"
+    owner                    = var.owner
+    prefix_name              = var.prefix_name
     ### vars pulled from previous modules
     replication_instance_arn = module.dms-replication-instance.replication_instance_arn
     source_endpoint_arn      = module.dms-replication-instance.dms_mysql_endpoint_source_arn

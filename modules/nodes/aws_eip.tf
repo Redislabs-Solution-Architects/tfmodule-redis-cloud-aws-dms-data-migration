@@ -1,9 +1,9 @@
-#### Create & associate EIP with RE and Test Nodes
+#### Create & associate EIP with MySQL Node
 
 #####################
-#### Test Nodes EIP
-resource "aws_eip" "test_node_eip" {
-  count = var.test-node-count
+#### MySQL Node EIP
+resource "aws_eip" "mysql_node_eip" {
+  count = var.mysql-node-count
   network_border_group = var.region
   domain      = "vpc"
 
@@ -14,10 +14,10 @@ resource "aws_eip" "test_node_eip" {
 
 }
 
-#### Test Node Elastic IP association
-resource "aws_eip_association" "test_eip_assoc" {
-  count = var.test-node-count
-  instance_id   = element(aws_instance.test_node.*.id, count.index)
-  allocation_id = element(aws_eip.test_node_eip.*.id, count.index)
-  depends_on    = [aws_instance.test_node, aws_eip.test_node_eip]
+#### mysql Node Elastic IP association
+resource "aws_eip_association" "mysql_eip_assoc" {
+  count = var.mysql-node-count
+  instance_id   = element(aws_instance.mysql_node.*.id, count.index)
+  allocation_id = element(aws_eip.mysql_node_eip.*.id, count.index)
+  depends_on    = [aws_instance.mysql_node, aws_eip.mysql_node_eip]
 }

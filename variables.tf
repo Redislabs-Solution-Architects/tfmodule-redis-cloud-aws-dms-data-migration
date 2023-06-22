@@ -50,13 +50,13 @@ variable "subnet_cidr_blocks" {
 }
 
 
-################################################ Test Instance Variables
-variable "test-node-count" {
+################################################ mysql Instance Variables
+variable "mysql-node-count" {
   description = "number of data nodes"
   default     = 1
 }
 
-variable "test_instance_type" {
+variable "mysql_instance_type" {
     description = "instance type to use. Default: t3.micro"
     default = "t3.micro"
 }
@@ -267,16 +267,3 @@ variable "rc_db_modules" {
         }
     ]
 }
-
-
-#################### DMS Target Endpoint Variables
-
-# variable "redis_db_endpoint" {
-#     description = "redis_db_endpoint."
-#     default = ""
-# }
-
-# variable "redis_db_password" {
-#     description = "redis_db_password."
-#     default = ""
-# }

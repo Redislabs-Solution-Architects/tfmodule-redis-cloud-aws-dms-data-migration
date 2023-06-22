@@ -1,10 +1,7 @@
 
 
-# output "redis_db_private_endpoint" {
-#   description = "redis_db_private_endpoint"
-#   value = rediscloud_subscription_database.example.private_endpoint
-# }
 
+## Get Redis Cloud DB private endpoint, cut off the :port from the end
 locals {
   original_endpoint = rediscloud_subscription_database.example.private_endpoint
   endpoint_parts = split(":", local.original_endpoint)

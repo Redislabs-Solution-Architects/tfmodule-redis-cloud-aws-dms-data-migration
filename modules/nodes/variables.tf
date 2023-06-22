@@ -40,15 +40,15 @@ variable "subnet_azs" {
     default = [""]
 }
 
-#### Test Instance Variables
+#### mysql Instance Variables
 
-#### instance type to use for test node with redis and memtier installed on it
-variable "test-node-count" {
+#### instance type to use for mysql node with redis and memtier installed on it
+variable "mysql-node-count" {
   description = "number of data nodes"
   default     = 1
 }
 
-variable "test_instance_type" {
+variable "mysql_instance_type" {
     description = "instance type to use. Default: t3.micro"
     default = "t3.micro"
 }

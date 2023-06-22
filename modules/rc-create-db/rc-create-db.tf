@@ -15,9 +15,4 @@ resource "rediscloud_subscription_database" "example" {
     port                                  = "12000"
     modules = var.rc_db_modules
 
-    # alert {
-    #   name = "dataset-size"
-    #   value = 40
-    # }
-
 }

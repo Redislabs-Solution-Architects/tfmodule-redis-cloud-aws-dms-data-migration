@@ -1,5 +1,19 @@
 #### Required Variables
 
+variable "owner" {
+    description = "owner tag name"
+}
+
+variable "prefix_name" {
+    description = "base name for resources (prefix name)"
+    default = "redisuser1-tf"
+}
+
+variable "subnet_azs" {
+    type = list(any)
+    description = "subnet availability zone"
+    default = [""]
+}
 
 variable "vpc_subnets_ids" {
   type        = list(any)
