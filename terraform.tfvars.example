@@ -8,31 +8,19 @@
 aws_creds = 
 
 #### User Input Required
-#### MUST HAVE 1 SSH KEY CREATED IN EACH INDIVIDUAL REGION
 #### name of ssh key (.pem file) to be added to instance (AWS key pair name)
 #### ie. if your AWS ssh keys name is "my-ssh-key.pem", enter in "my-ssh-key"
 #### the SSH key must have already had "chmod 400 my-ssh-key.pem" run on it before using
-#### (To create new keys: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html) (but include region param)
+#### (To create new keys: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html)
 #### (fake example: ssh_key_name = "my-ssh-key")
 ## region A ssh key
-ssh_key_name1 =
-## region B ssh key 
-ssh_key_name2 = 
+ssh_key_name = 
 
 #### User Input Required
 #### path to your the SSH key .pem file.
 #### (fake example: ssh_key_path = "~/keys/my-ssh-key.pem")
 ## region A ssh key path
-ssh_key_path1 =
-## region B ssh key path 
-ssh_key_path2 = 
-
-#### User Input Required
-#### DNS hosted zone id (find value in R53 hosted zones)
-#### *(if you do not have one already, go get a domain name on Route53)*
-### navigate to Route 53 in the AWS console, click hosted zones, 
-### find hosted zone "domain name" of interest, use its "hosted zone ID" (fake example: dns_hosted_zone_id="Z903232kljadfdk")
-dns_hosted_zone_id = 
+ssh_key_path = 
 
 #### Owner tag name of resources
 #### example: owner = "redisuser@redis.com"
@@ -40,80 +28,42 @@ owner =
 
 #### AWS Regions
 #### example: region1 = "us-west-2"
-region1 = 
+region = "us-west-2"
 
-#### example: region2 = "us-east-1"
-region2 = 
+#### (Resource prefix for all generated aws resources)
+#### example: prefix_name = "redisuser1-dms-tf"
+prefix_name = 
 
-############################################################ Base Name of Resources 
-#### (Resource prefix for all generated resources, including cluster name)
-#### example: base_name1 = "redisuser1-tf"
-base_name1 = 
+############################################################ AWS VPC Variables
 
-#### example: base_name1 = "redisuser2-tf"
-base_name2 = 
+# Customer AWS Account ID
+#### fake example: aws_customer_application_aws_account_id = "1111111111"
+aws_account_id = 
 
-############################################################ VPC Variables
+#### VPC CIDR for VPC
+#### example: vpc_cidr = "10.0.0.0/16"
+vpc_cidr = "10.0.0.0/16"
 
-#### VPC CIDR for VPC 1 & 2, MUST NOT OVERLAP!!!!!! (for vpc peering)
-#### example: vpc_cidr1 = "10.0.0.0/16"
-vpc_cidr1 = "10.0.0.0/16"
-
-#### example: vpc_cidr2 = "10.1.0.0/16"
-vpc_cidr2 = "10.1.0.0/16"
-
-#### Subnet CIDR Block (for VPC 1 & 2) (obviously must relate to vpc cidr)
-#### example: subnet_cidr_blocks1 = ["10.0.0.0/24","10.0.16.0/24","10.0.32.0/24"]
-subnet_cidr_blocks1 = ["10.0.1.0/24","10.0.2.0/24","10.0.3.0/24"]
-
-#### example: subnet_cidr_blocks2 = ["10.1.1.0/24","10.1.2.0/24","10.1.3.0/24"]
-subnet_cidr_blocks2 = ["10.1.1.0/24","10.1.2.0/24","10.1.3.0/24"]
+#### Subnet CIDR Block
+#### example: subnet_cidr_blocks = ["10.0.0.0/24","10.0.16.0/24","10.0.32.0/24"]
+subnet_cidr_blocks = ["10.0.1.0/24","10.0.2.0/24"]
 
 #### Subnet AZ 
-#### example: subnet_azs1 = ["us-west-2a","us-west-2b","us-west-2c"]
-subnet_azs1 = ["us-west-2a","us-west-2b","us-west-2c"]
+#### example: subnet_azs = ["us-east-1a","us-east-1b","us-east-1c"]
+subnet_azs = ["us-west-2a","us-west-2b"]
 
-#### example: subnet_azs2 = ["us-east-1a","us-east-1b","us-east-1c"]
-subnet_azs2 = ["us-east-1a","us-east-1b","us-east-1c"]
 
-############################################################ Test Instance Variables
+############################################################ mysql Instance Variables
 
-#### instance type to use for test node with redis and memtier installed on it
-#### example: test_instance_type = "t3.micro"
-test_instance_type = "t3.micro"
+#### instance type to use for Mysql node
+#### example: mysql_instance_type = "t3.micro"
+mysql_instance_type = "t2.large"
 
-#### how many test nodes
-#### example: test-node-count = 1
-test-node-count = 1
+#### how many mysql nodes
+#### example: mysql-node-count = 1
+mysql-node-count = 1
 
-############################################################ Redis Enterprise Nodes Variables
-
-#### User Input Required
-#### RE Software download url (MUST BE ubuntu 18.04)
-#### Find download here: https://redis.com/redis-enterprise-software/download-center/software/
-#### (FAKE example (update the x.x.xx with the Redis Software version!): re_download_url = "https://s3.amazonaws.com/redis-enterprise-software-downloads/x.x.xx/redislabs-x.x.xx-68-bionic-amd64.tar")
-re_download_url = 
-
-#### RE cluster options
-#### Do you want a Redis on Flash enabled cluster, if so, true, else, false
-#### example: flash_enabled = false
-flash_enabled = false
-
-#### Do you want a Rack Zone Aware enabled cluster, if so, true, else, false
-#### example: rack_awareness = false
-rack_awareness = false
-
-#### how many data nodes, 3 minimum
-#### example: data-node-count = 3
-data-node-count = 3
-
-##### redis enterprise software instance type
-##### example: re_instance_type = "t2.xlarge"
-re_instance_type = "t2.xlarge"
-
-##### EBS volume for persistent and ephemeral storage
-#### example: re-volume-size = 150
-re-volume-size = "50"
+ebs-volume-size = 40
 
 ############################################################ SECURITY
 ##### example: allow-public-ssh = 1
@@ -123,63 +73,74 @@ allow-public-ssh = 1
 ##### example: open-nets = ["10.0.0.0/16"]
 open-nets = ["10.0.0.0/16"]
 
+############################################################ Redis Cloud Variables
 
-############################################################ Create RE Cluster Variables
-#### Cluster Inputs
-#### RE Cluster Username
-#### example: re_cluster_username = "admin@admin.com"
-re_cluster_username = "admin@admin.com"
+############################################################ Redis Cloud Subscription Variables
 
-#### RE Cluster Password
-#### example: re_cluster_password = "admin"
-re_cluster_password = "admin"
+# Access key and Secret key for Redis Cloud account [REDISCLOUD_ACCESS_KEY, REDISCLOUD_SECRET_KEY]
+#### (fake example: rediscloud_creds = ["myAccesssKeyxjdklfdakf","MySecretKeyxkldkfhadjkfh"]) 
+rediscloud_creds = 
 
+# credit card type
+#### example: cc_type = "Visa"
+cc_type = 
 
-############################################################ RE CRDB DB variable inputs
-#### these will define what the crdb db between the clusters looks like
-#### the db name
-#### example: crdb_db_name = "crdb-test1"
-crdb_db_name = "crdb-test1"
+# Last 4 digits for payment method
+#### fake example: cc_last_4 = "1234"
+cc_last_4 = 
 
-#### the port for the db (must be between 10000-19999)
-#### example: crdb_port = 12001
-crdb_port = 12001
+# Redis Cloud Subscription name (ie. cluster name)
+#### example: rediscloud_subscription_name = "redisuser-tf-dms-sub"
+rediscloud_subscription_name = 
 
-#### db total memory size (including replication) in bytes
-#### example: crdb_memory_size = 10000000000
-crdb_memory_size = 10000000000
+# Redis Cloud Subscription Region (AWS)
+#### example: rc_region = "us-east-1"
+rc_region = "us-west-2"
 
-#### Replication True/False (CRDBs require replication)
-#### example: crdb_replication = "True"
-crdb_replication = "True"
+# Redis Cloud Subscription Region AZs (must match aws region)
+#### example: rc_preferred_availability_zones = ["us-east-1a","us-east-1b","us-east-1c"]
+rc_preferred_availability_zones = ["us-west-2a","us-west-2b","us-west-2c"]
 
-#### aof policy
-#### example: crdb_aof_policy = "appendfsync-every-sec"
-crdb_aof_policy = "appendfsync-every-sec"
-
-#### Sharding (True/False), if False change the shards_count to 1
-#### example: crdb_sharding = "True"
-crdb_sharding = "True"
-
-#### how many master shards for the crdb
-#### example: crdb_shards_count = 2
-crdb_shards_count = 2
+# Redis Cloud Subscription CIDR (must not overlap AWS Applicaiton VPC CIDR)
+#### MUST BE A /24 CIDR
+#### example: rc_networking_deployment_cidr = "10.1.0.0/24"
+rc_networking_deployment_cidr = "192.168.1.0/24"
 
 
-############################################################ Memtier Benchmark
-##### cmds will run on tester node for specific cluster
-##### no need to include the -s endpoint -p port, those are added by automatically in ansible
+############################################################ Redis Cloud DB Creation Variables
 
-##### Data load commands
-#### example: memtier_data_load_cluster1 = "memtier_benchmark -t 4 -c 1 --pipeline 30 -d 300 --key-maximum=2500000 --key-prefix='1clusterA' --key-pattern=P:P -n allkeys"
-memtier_data_load_cluster1 = "memtier_benchmark -t 4 -c 1 --pipeline 30 -d 300 --key-maximum=2500000 --key-prefix='1clusterA' --key-pattern=P:P -n allkeys"
+## Relevant only to ram-and-flash clusters. Estimated average size (measured in bytes) of the items stored in the database.
+#rc_db_average_item_size_in_bytes = 0
 
-#### example: memtier_data_load_cluster2 = "memtier_benchmark -t 4 -c 1 --pipeline 30 -d 300 --key-maximum=2500000 --key-prefix='2clusterB' --key-pattern=P:P -n allkeys"
-memtier_data_load_cluster2 = "memtier_benchmark -t 4 -c 1 --pipeline 30 -d 300 --key-maximum=2500000 --key-prefix='2clusterB' --key-pattern=P:P -n allkeys"
+## Databases replication (true or false)
+rc_db_replication =  true
 
-##### Benchmark commands
-#### example: memtier_benchmark_cluster1 = "memtier_benchmark -x 1 --ratio=1:1 --test-time=300 -d 500 -t 10 -c 10 --pipeline=10 --key-pattern=S:S --key-prefix='1clusterA'"
-memtier_benchmark_cluster1 = "memtier_benchmark -x 1 --ratio=1:1 --test-time=300 -d 500 -t 10 -c 10 --pipeline=10 --key-pattern=S:S --key-prefix='1clusterA'"
+# Should use the external endpoint for open-source (OSS) Cluster API. 
+# Can only be enabled if OSS Cluster API support is enabled
+rc_db_external_endpoint_for_oss_cluster_api = false
 
-#### example: memtier_benchmark_cluster2 = "memtier_benchmark -x 1 --ratio=1:1 --test-time=300 -d 500 -t 10 -c 10 --pipeline=10 --key-pattern=S:S --key-prefix='2clusterB'"
-memtier_benchmark_cluster2 = "memtier_benchmark -x 1 --ratio=1:1 --test-time=300 -d 500 -t 10 -c 10 --pipeline=10 --key-pattern=S:S --key-prefix='2clusterB'"
+# Support Redis open-source (OSS) Cluster API.
+rc_db_support_oss_cluster_api = false
+
+# Throughput measurement method, (either ‘number-of-shards’ or ‘operations-per-second’)
+rc_db_throughput_measurement_by = "number-of-shards"
+
+# Throughput value (as applies to selected measurement method)
+# must be increments of 1000
+rc_db_throughput_measurement_value = 1
+
+# Rate of database data persistence (in persistent storage)
+rc_db_data_persistence = "none"
+
+# Maximum memory usage for this specific database
+rc_db_memory_limit_in_gb = 5
+
+# db name
+rc_db_name = "dms-database"
+
+# Db modules
+rc_db_modules = [
+        {
+          "name": "RediSearch"
+        }
+    ]

@@ -1,5 +1,11 @@
 #### Outputs
 
-# output "re-data-node-eips" {
-#   value = aws_eip.re_cluster_instance_eip[*].public_ip
-# }
+output "dms_mysql_endpoint_source_arn" {
+  value = aws_dms_endpoint.dms-endpoint.endpoint_arn
+  }
+
+output "replication_instance_arn" {
+  value = aws_dms_replication_instance.test.replication_instance_arn
+  }
+
+  

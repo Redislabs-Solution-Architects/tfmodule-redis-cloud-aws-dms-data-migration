@@ -1,13 +1,13 @@
 #### Create EC2 Node for MySQL DB
 
 # create EC2 Node for MySQL DB
-resource "aws_instance" "test_node" {
-  count                       = var.test-node-count
+resource "aws_instance" "mysql_node" {
+  count                       = var.mysql-node-count
   ami                         = data.aws_ami.ec2-ami.id
   associate_public_ip_address = true
   availability_zone           = element(var.subnet_azs, count.index)
   subnet_id                   = element(var.vpc_subnets_ids, count.index)
-  instance_type               = var.test_instance_type
+  instance_type               = var.mysql_instance_type
   key_name                    = var.ssh_key_name
   vpc_security_group_ids      = [ aws_security_group.dms_sg.id ]
   source_dest_check           = false

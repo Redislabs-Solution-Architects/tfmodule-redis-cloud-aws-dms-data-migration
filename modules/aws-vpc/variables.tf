@@ -20,19 +20,19 @@ variable "prefix_name" {
 
 variable "vpc_cidr" {
     description = "vpc-cidr"
-    default = "10.0.0.0/16"
+    #default = "10.0.0.0/16"
 }
 
 #### Declare the list of subnet CIDR blocks
 variable "subnet_cidr_blocks" {
     type = list(string)
     description = "subnet_cidr_block"
-    default = ["10.0.1.0/24","10.0.2.0/24","10.0.3.0/24"]
+    #default = ["10.0.1.0/24","10.0.2.0/24","10.0.3.0/24"]
 }
 
 
 #### Declare the list of availability zones
 variable "subnet_azs" {
   type = list(string)
-  default = ["us-west-2a","us-west-2b","us-west-2c"]
+  #default = ["us-west-2a","us-west-2b","us-west-2c"]
 }

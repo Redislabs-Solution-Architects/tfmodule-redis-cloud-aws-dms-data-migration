@@ -2,7 +2,7 @@ terraform {
   required_providers {
     rediscloud = {
      source = "RedisLabs/rediscloud"
-     version = "1.0.1"
+     version = "1.2.0"
      }
     aws = {
       source  = "hashicorp/aws"
@@ -15,7 +15,7 @@ terraform {
 #### AWS region and AWS key pair for region A
 #### Cluster A will live in region A and use this provider
 provider "aws" {
-  region     = var.region1
+  region     = var.region
   access_key = var.aws_creds[0]
   secret_key = var.aws_creds[1]
 }
