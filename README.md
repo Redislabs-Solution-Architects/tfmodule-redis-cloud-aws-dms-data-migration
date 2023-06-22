@@ -9,9 +9,9 @@ This partner solution showcases the data migration from a MySQL database to Redi
 * Deployment of a reference architecture that showcases workload migration from a transactional database system like MySQL to Redis Enterprise Cloud on AWS.
 * A VPC configured with a public and a private subnets, according to AWS best practices, to provide you with your own networking infrastructure on AWS.
 * Within this VPC,
-** In the public subnet, deploy a transactional database system like MySQL as the source database to migrate from.
-** In the private subnet, deploy AWS DMS service( Data Migration service) with  source & target endpoints and DMS migration tasks that migrate the data from MySQL to Redis Enterprise Cloud on AWS.
-** In a separate VPC created by Redis Inc's fully managed solution, you will perform deployment of Redis Enterprise Cloud on AWS as a target database system that will be leveraged as a primary database, replacing traditional transactional MySQL databases.
+    * In the public subnet, deploy a transactional database system like MySQL as the source database to migrate from.
+    * In the private subnet, deploy AWS DMS service( Data Migration service) with  source & target endpoints and DMS migration tasks that migrate the data from MySQL to Redis Enterprise Cloud on AWS.
+    * In a separate VPC created by Redis Inc's fully managed solution, you will perform deployment of Redis Enterprise Cloud on AWS as a target database system that will be leveraged as a primary database, replacing traditional transactional MySQL databases.
 * You would also perform successful data migration verification steps, to ensure all data is migrated into Redis Enterprise Cloud on AWS.
 
 # How to deploy:
