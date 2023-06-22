@@ -31,16 +31,16 @@ This partner solution showcases the data migration from a MySQL database to Redi
 
 
 *****************
-Create a VPC
-Create a EC2 node and install docker. Create a MySQL Db and load data into a few tables from an zip file in S3.
-The DB may take about 20 minutes to load all the data.
+### Troubleshooting
+When you create the EC2 instance docker and mysql will be installed, then a db zip file will be grabbed from s3.
+Then it will create a MySQL Db and load data into a few tables from an zip file in S3.
+The DB may take about 7 minutes to load all the data.
 After this configure AWS DMS.
-
-
-###
-You can check in the EC2 user_data how things are running by accessing the ec2 then running the following:
-* cd /var/log
-* cat cloud-init-output.log
+* If you would like to check out the *user_data* output that ran inside of the EC2 instance you can access the EC2 instance and run the following commands:
+    ```bash
+    cd /var/log
+    cat cloud-init-output.log
+    ```
 
 
 ### Instructions for Use:
@@ -56,13 +56,10 @@ You can check in the EC2 user_data how things are running by accessing the ec2 t
     ```bash
     # create virtual environment
     python3 -m venv ./venv
-    # ensure ansible is in path (you should see an output showing ansible is there)
-    # if you see nothing refer back to the prerequisites section for installing ansible.
-    ansible --version
     # run terraform commands
     terraform init
     terraform plan
     terraform apply
     # Enter a value: yes
-    # can take around 10 minutes to provision cluster
+    # can take around 15 minutes to provision everything
     ```
