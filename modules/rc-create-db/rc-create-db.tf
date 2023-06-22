@@ -12,6 +12,7 @@ resource "rediscloud_subscription_database" "example" {
     support_oss_cluster_api               = var.rc_db_support_oss_cluster_api
     external_endpoint_for_oss_cluster_api = var.rc_db_external_endpoint_for_oss_cluster_api
     replication                           = var.rc_db_replication
+    port                                  = "12000"
     modules = var.rc_db_modules
 
     # alert {

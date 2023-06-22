@@ -1,5 +1,5 @@
 #### Provider variables
-variable "region1" {
+variable "region" {
     description = "AWS region"
 }
 
@@ -8,11 +8,11 @@ variable "aws_creds" {
 }
 
 #### Important variables
-variable "ssh_key_name1" {
+variable "ssh_key_name" {
     description = "name of ssh key to be added to instance"
 }
 
-variable "ssh_key_path1" {
+variable "ssh_key_path" {
     description = "name of ssh key to be added to instance"
 }
 
@@ -21,29 +21,36 @@ variable "owner" {
 }
 
 #### VPC
-variable "base_name1" {
+################################################ AWS VPC
+variable "prefix_name" {
     description = "base name for resources (prefix name)"
     default = "redisuser1-tf"
 }
 
-variable "vpc_cidr1" {
-    description = "vpc-cidr1"
-    default = "10.0.0.0/16"
+variable "aws_account_id" {
+    description = "aws_account_id"
 }
 
-variable "subnet_cidr_blocks1" {
-    type = list(any)
-    description = "subnet_cidr_block1"
-    default = ["10.0.1.0/24","10.0.2.0/24"]
+variable "vpc_cidr" {
+    description = "aws_customer_application_vpc_cidr"
+    #default = "10.0.0.0/16"
 }
 
-variable "subnet_azs1" {
-    type = list(any)
-    description = "subnet availability zone"
-    default = [""]
+#### Declare the list of availability zones
+variable "subnet_azs" {
+  type = list(string)
+  #default = ["us-east-1a","us-east-1b","us-east-1c"]
 }
 
-#### Test Instance Variables
+#### Declare the list of subnet CIDR blocks
+variable "subnet_cidr_blocks" {
+    type = list(string)
+    description = "subnet_cidr_block"
+    #default = ["10.0.1.0/24","10.0.2.0/24","10.0.3.0/24"]
+}
+
+
+################################################ Test Instance Variables
 variable "test-node-count" {
   description = "number of data nodes"
   default     = 1
@@ -55,7 +62,7 @@ variable "test_instance_type" {
 }
 
 
-#### EBS volume for persistent and ephemeral storage
+################################################ EBS volume
 variable "ebs-volume-size" {
   description = "The size of the ebs volumes to attach"
   default     = "40"
@@ -108,66 +115,7 @@ variable "external-rules" {
   ]
 }
 
-
 ##################################### Redis Cloud Variables
-
-##################### AWS Variables
-
-# #### Provider variables
-# variable "aws_creds" {
-#     description = "Access key and Secret key for AWS [Access Keys, Secret Key]"
-# }
-
-# variable "owner" {
-#     description = "owner tag name"
-# }
-
-### AWS VPC
-variable "prefix_name" {
-    description = "base name for resources (prefix name)"
-    default = "redisuser1-tf"
-}
-
-#### Declare the list of subnet CIDR blocks
-variable "subnet_cidr_blocks" {
-    type = list(string)
-    description = "subnet_cidr_block"
-    #default = ["10.0.1.0/24","10.0.2.0/24","10.0.3.0/24"]
-}
-
-
-#### Declare the list of availability zones
-variable "subnet_azs" {
-  type = list(string)
-  #default = ["us-east-1a","us-east-1b","us-east-1c"]
-}
-
-
-##### Subscription Peering
-
-variable "aws_customer_application_vpc_region" {
-    description = "aws_customer_application_vpc_region"
-    #default = "us-east-1"
-}
-
-variable "aws_customer_application_aws_account_id" {
-    description = "aws_customer_application_aws_account_id"
-}
-
-variable "aws_customer_application_vpc_id" {
-    description = "aws_customer_application_vpc_id"
-    default = ""
-}
-
-variable "aws_customer_application_vpc_cidr" {
-    description = "aws_customer_application_vpc_cidr"
-    #default = "10.0.0.0/16"
-}
-
-variable "aws_vpc_route_table_id" {
-    description = "aws_customer_application_vpc_cidr"
-    default = ""
-}
 
 ##################### Redis Cloud Variables
 
@@ -267,11 +215,6 @@ variable "rc_cp_modules" {
 
 
 ######################################## Redis Cloud Database Variables
-# variable "rc_db_average_item_size_in_bytes" {
-#     description = "Relevant only to ram-and-flash clusters. Estimated average size (measured in bytes) of the items stored in the database."
-#     default = 0
-# }
-
 variable "rc_db_external_endpoint_for_oss_cluster_api" {
     description = "Should use the external endpoint for open-source (OSS) Cluster API. Can only be enabled if OSS Cluster API support is enabled"
     default = false
@@ -324,3 +267,16 @@ variable "rc_db_modules" {
         }
     ]
 }
+
+
+#################### DMS Target Endpoint Variables
+
+# variable "redis_db_endpoint" {
+#     description = "redis_db_endpoint."
+#     default = ""
+# }
+
+# variable "redis_db_password" {
+#     description = "redis_db_password."
+#     default = ""
+# }

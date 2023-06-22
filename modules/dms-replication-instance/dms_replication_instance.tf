@@ -1,6 +1,3 @@
-# provider "aws" {
-#   region = "us-west-2"
-# }
 
 resource "aws_dms_replication_subnet_group" "dms_subnet_group" {
   replication_subnet_group_description = "dms replication subnetgroup"
