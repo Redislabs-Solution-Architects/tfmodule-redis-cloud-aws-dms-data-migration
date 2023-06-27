@@ -1,7 +1,5 @@
-#### Create & attach EBS volumes for RE nodes
+#### Create & attach EBS volumes
 
-# Attach Persistent Volumes
-# Instance 1
 resource "aws_ebs_volume" "mysql_node" {
   count             = var.mysql-node-count
   availability_zone = element(var.subnet_azs, count.index)

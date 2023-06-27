@@ -8,10 +8,6 @@ variable "ssh_key_name" {
     description = "name of ssh key to be added to instance"
 }
 
-variable "ssh_key_path" {
-    description = "name of ssh key to be added to instance"
-}
-
 variable "owner" {
     description = "owner tag name"
 }
@@ -59,10 +55,10 @@ variable "ena-support" {
   default     = true
 }
 
-variable "re_instance_type" {
-    description = "re instance type"
-    default     = "t2.xlarge"
-}
+# variable "re_instance_type" {
+#     description = "re instance type"
+#     default     = "t2.xlarge"
+# }
 
 variable "node-root-size" {
   description = "The size of the root volume"

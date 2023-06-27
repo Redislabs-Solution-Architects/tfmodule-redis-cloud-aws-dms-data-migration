@@ -45,7 +45,6 @@ module "nodes" {
     vpc_cidr           = var.vpc_cidr
     subnet_azs         = var.subnet_azs
     ssh_key_name       = var.ssh_key_name
-    ssh_key_path       = var.ssh_key_path
     mysql_instance_type = var.mysql_instance_type
     mysql-node-count    = var.mysql-node-count
     ebs-volume-size    = var.ebs-volume-size

@@ -16,12 +16,6 @@ aws_creds =
 ## region A ssh key
 ssh_key_name = 
 
-#### User Input Required
-#### path to your the SSH key .pem file.
-#### (fake example: ssh_key_path = "~/keys/my-ssh-key.pem")
-## region A ssh key path
-ssh_key_path = 
-
 #### Owner tag name of resources
 #### example: owner = "redisuser@redis.com"
 owner = 
