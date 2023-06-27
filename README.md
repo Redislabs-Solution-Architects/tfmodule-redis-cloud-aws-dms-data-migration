@@ -63,3 +63,14 @@ After this configure AWS DMS.
     # Enter a value: yes
     # can take around 15 minutes to provision everything
     ```
+#### DMS Migration Task:
+5. Now Do the DMS Data Migration!
+* Follow the steps below:
+* follow migration task instructions
+
+![Alt text](image/dms-migration/Picture1.png?raw=true "Title")
+![Alt text](image/dms-migration/Picture2.png?raw=true "Title")
+![Alt text](image/dms-migration/Picture3.png?raw=true "Title")
+![Alt text](image/dms-migration/Picture4.png?raw=true "Title")
+![Alt text](image/dms-migration/Picture5.png?raw=true "Title")
+![Alt text](image/dms-migration/Picture6.png?raw=true "Title")
