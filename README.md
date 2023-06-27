@@ -63,7 +63,7 @@ After this configure AWS DMS.
     # Enter a value: yes
     # can take around 15 minutes to provision everything
     ```
-#### DMS Migration Task:
+### DMS Migration Task:
 5. Now Do the DMS Data Migration!
 * Follow the steps below:
 * follow migration task instructions
@@ -74,3 +74,12 @@ After this configure AWS DMS.
 ![Alt text](image/dms-migration/Picture4.png?raw=true "Title")
 ![Alt text](image/dms-migration/Picture5.png?raw=true "Title")
 ![Alt text](image/dms-migration/Picture6.png?raw=true "Title")
+
+
+### Clean Up:
+1. Delete resources
+    ```bash
+    terraform destroy
+    # Enter a value: yes
+    # can take around 15 minutes to destroy everything
+    ```
