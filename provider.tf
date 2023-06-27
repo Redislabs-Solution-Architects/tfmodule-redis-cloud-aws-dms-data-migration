@@ -7,13 +7,12 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = ">= 3.0"
-      configuration_aliases = [ aws.a]
+      #configuration_aliases = [ aws.a]
     }
   }
 }
 
-#### AWS region and AWS key pair for region A
-#### Cluster A will live in region A and use this provider
+#### AWS region and AWS key pair
 provider "aws" {
   region     = var.region
   access_key = var.aws_creds[0]
